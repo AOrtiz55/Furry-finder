@@ -1,0 +1,195 @@
+/* Root and layers */
+.doggo-bg {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(#bee3f8, #d6f0ff, #fdfdfd);
+}
+
+.clouds,
+.paws,
+.bones {
+  position: fixed;
+  inset: 0;
+  z-index: -1; /* behind your content */
+  pointer-events: none;
+}
+
+.ground {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0; /* just above the clouds */
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1; /* your page content sits above everything */
+}
+
+/* Clouds */
+.cloud {
+  position: absolute;
+  left: -25%;
+  height: 64px; /* smaller cloud */
+  width: auto;
+  opacity: 0.6;
+  top: var(--top, 10%);
+  transform: scale(var(--scale, 0.8));
+  animation: cloud-drift linear infinite;
+  animation-duration: var(--dur, 60s);
+  animation-delay: var(--delay, 0s);
+}
+
+/* Paws */
+.paw {
+  position: absolute;
+  top: -10vh;
+  left: var(--left, 50%);
+  height: 24px;
+  width: 24px;
+  color: rgba(0, 0, 0, 0.2);
+  transform: scale(var(--scale, 1));
+  animation: paw-fall linear infinite;
+  animation-duration: var(--dur, 12s);
+  animation-delay: var(--delay, 0s);
+}
+
+/* Bones */
+.bone {
+  position: absolute;
+  left: -10vw;
+  top: var(--top, 20%);
+  height: 20px;
+  width: 20px;
+  opacity: 0.3;
+  animation: bone-drift linear infinite;
+  animation-duration: var(--dur, 36s);
+  animation-delay: var(--delay, 0s);
+  transform: translateY(var(--y, 0));
+}
+
+/* Hills & dog */
+.hills {
+  width: 100%;
+  height: 22vh;
+}
+
+.dog-lane {
+  position: relative;
+  height: 10vh;
+}
+
+.dog {
+  position: absolute;
+  bottom: 16px;
+  left: -25%;
+  height: 64px;
+  width: auto;
+  animation: doggo-run 22s linear infinite;
+}
+
+.dog-bob {
+  animation: dog-bob 0.8s ease-in-out infinite;
+}
+
+.tail {
+  transform-origin: 40px 60px;
+  animation: wag 0.25s ease-in-out infinite alternate;
+}
+
+.legs {
+  animation: legs 0.6s linear infinite;
+}
+
+/* Animations */
+@keyframes cloud-drift {
+  0% {
+    transform: translateX(-20%) scale(var(--scale, 1));
+  }
+  100% {
+    transform: translateX(120%) scale(var(--scale, 1));
+  }
+}
+
+@keyframes paw-fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg) scale(var(--scale, 1));
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(110vh) rotate(90deg) scale(var(--scale, 1));
+    opacity: 0;
+  }
+}
+
+@keyframes bone-drift {
+  0% {
+    transform: translateX(-10vw) translateY(var(--y, 0)) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateX(110vw) translateY(var(--y, 0)) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes doggo-run {
+  0% {
+    transform: translateX(-25%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes dog-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes wag {
+  from {
+    transform: rotate(-10deg);
+  }
+  to {
+    transform: rotate(18deg);
+  }
+}
+
+@keyframes legs {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(1px);
+  }
+}
+
+/* Motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
